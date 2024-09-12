@@ -17,6 +17,15 @@
         <li class="nav-item" v-if="isAdmin">
           <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">Manager</router-link>
         </li>
+        <li class="nav-item" >
+          <router-link to="/Firelogin" class="nav-link" active-class="active">Firelogin</router-link>
+        </li>
+        <li class="nav-item" >
+          <router-link to="/FireRegister" class="nav-link" active-class="active">Fireregister</router-link>
+        </li>
+        <li class="nav-item" >
+          <router-link to="/AddBook" class="nav-link" active-class="active">Add book</router-link>
+        </li>
       </ul>
       
       <div class="ml-auto" v-if="!isAuthenticated" >
@@ -25,6 +34,7 @@
       <div v-if="isAuthenticated" class="ml-auto"> 
         <button @click="logout" class="btn btn-outline-secondary">Logout</button>
       </div>
+      
     </header>
   </div>
 </template>

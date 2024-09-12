@@ -6,6 +6,8 @@ import router from './router'
 
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 
 const app = createApp(App)
@@ -46,3 +48,15 @@ const createDefaultAdmin = () => {
   
   
   createDefaultAdmin();
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDkrBPTJfESsh0UP6nZtHAqUYW6bNowhPw",
+    authDomain: "week7-qiruizhang.firebaseapp.com",
+    projectId: "week7-qiruizhang",
+    storageBucket: "week7-qiruizhang.appspot.com",
+    messagingSenderId: "63293350787",
+    appId: "1:63293350787:web:ea97c7599bf62b193accb6",
+    measurementId: "G-9R295ZRYGJ"
+  };
+
+  initializeApp(firebaseConfig);

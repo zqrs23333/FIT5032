@@ -6,6 +6,8 @@ import AccessDenied from '../views/AccessDenied.vue'
 import HomeView from '../views/HomeView.vue'
 import ManageView from '../views/ManageView.vue'
 import SuccessRegisterView from '../views/SuccessRegisterView.vue'
+import FirebaseRegister  from '../views/FirebaseRegister.vue'
+import FirebaseSigninView from '../views/FirebaseSigninView.vue'
 
 const routes = [
   {
@@ -42,7 +44,19 @@ const routes = [
     path: '/SuccessRegister',   
     name: 'SuccessRegister',
     component: SuccessRegisterView
+  },
+  {
+    path: '/FireRegister',
+    name: 'FireRegister',
+    component: FirebaseRegister
+  },
+  {
+    path: '/Firelogin',
+    name: 'Firelogin',
+    component: FirebaseSigninView
   }
+
+
 
 ]
 

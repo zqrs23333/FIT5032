@@ -6,9 +6,15 @@ module.exports = {
   'extends': [
     'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@vue/eslint-config-prettier/skip-formatting'
+    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-prettier' 
   ],
+  env: {
+    node: true,
+    es2021: true,
+  },
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   }
-}
+};

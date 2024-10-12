@@ -17,38 +17,17 @@ import BHeader from './components/BHeader.vue'
 </template>
 
 <style scoped>
-.container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 80vw;
+.main-container {
+  max-width: 100vw;
   margin: 0 auto;
+  background-color: #f8f9fa; /* 设置主容器的背景颜色（例如浅灰色） */
+}
+
+.main-box {
   padding: 20px;
-
+  background-color: #ffffff;
   border-radius: 10px;
-}
-
-/* Class selectors */
-.form {
-  text-align: center;
-  margin-top: 50px;
-}
-
-/* ID selectors */
-#username:focus,
-#password:focus,
-#isAustralian:focus,
-.card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.card-header {
-  background-color: #275fda;
-  color: white;
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
-}
-.list-group-item {
-  padding: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 </style>
-

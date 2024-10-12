@@ -6,10 +6,14 @@ import AccessDenied from '../views/AccessDenied.vue'
 import HomeView from '../views/HomeView.vue'
 import ManageView from '../views/ManageView.vue'
 import SuccessRegisterView from '../views/SuccessRegisterView.vue'
-import FirebaseRegister from '../views/FirebaseRegister.vue'
-import FirebaseSigninView from '../views/FirebaseSigninView.vue'
 import AddBookView from '../views/AddBookView.vue'
 import GetBookCountView from '../views/GetBookCountView.vue'
+import WeatherView from '../views/WeatherView.vue';
+import CountBookAPI from '../views/CountBookAPI.vue'
+import NewsGalleryView from '../views/NewsGalleryPage.vue';
+import NewsArticlePage from '../views/NewsArticlePage.vue';
+import AddArticle from '../views/AddArticle.vue'
+import Articlemanage from '../views/Articlemanage.vue'
 
 const routes = [
   {
@@ -48,24 +52,46 @@ const routes = [
     component: SuccessRegisterView
   },
   {
-    path: '/FireRegister',
-    name: 'FireRegister',
-    component: FirebaseRegister
-  },
-  {
-    path: '/Firelogin',
-    name: 'Firelogin',
-    component: FirebaseSigninView
-  },
-  {
     path: '/AddBook',
     name: 'AddBook',
     component: AddBookView
-  },
+  }
+  ,
   {
     path: '/GetBookCount',
     name: 'GetBookCount',
     component: GetBookCountView
+  }
+  ,
+  {
+    path: '/WeatherCheck',
+    name: 'WeatherCheck',
+    component: WeatherView
+  },
+  {
+    path: '/CountBookAPI',
+    name: 'CountBookAPI',
+    component: CountBookAPI
+  },
+  {
+    path: '/NewsGalleryView',
+    name: 'NewsGalleryView',
+    component: NewsGalleryView
+  },
+  {
+    path: '/NewsGalleryView/article/:id',
+    name: 'NewsArticle',
+    component: NewsArticlePage,
+  },
+  {
+    path: '/AddArticle',
+    name: 'AddArticle',
+    component: AddArticle,
+  },
+  {
+    path: '/Articlemanage',
+    name: 'Articlemanage',
+    component: Articlemanage,
   }
 ]
 
@@ -73,46 +99,28 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
-// const { onRequest } = require('firebase-functions/v2/https')
-const admin = require('firebase-admin')
-const cors = require('cors')({ origin: true })
-admin.initializeApp()
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
   const isAdmin = localStorage.getItem('isAdmin') === 'true'
 
   const publicPages = ['Login', 'Register', 'Home', 'SuccessRegister']
-  const managerPages = ['Manager']
+  const managerPages = ['Manager','Articlemanage','AddArticle']
 
   if (managerPages.includes(to.name)) {
     if (isAdmin) {
       next()
     } else {
-      next('/')
+      next('/access-denied')
     }
     return
   }
 
   if (!isAuthenticated && !publicPages.includes(to.name)) {
-    next('/')
+    next('/login')
   } else {
     next()
   }
 })
+
 export default router
-
-exports.countBooks = onRequest((req, res) => {
-  cors(req, res, async () => {
-    try {
-      const booksCollection = admin.firestore().collection('books')
-      const snapshot = await booksCollection.get()
-      const count = snapshot.size
-
-      res.status(200).send({ count })
-    } catch (error) {
-      console.error('Error counting books:', error.message)
-      res.status(500).send('Error counting books')
-    }
-  })
-})

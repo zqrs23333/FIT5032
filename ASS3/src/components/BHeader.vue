@@ -15,13 +15,7 @@
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
         </li>
         <li class="nav-item" v-if="isAdmin">
-          <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">Manager</router-link>
-        </li>
-        <li class="nav-item" >
-          <router-link to="/Firelogin" class="nav-link" active-class="active">Firelogin</router-link>
-        </li>
-        <li class="nav-item" >
-          <router-link to="/FireRegister" class="nav-link" active-class="active">Fireregister</router-link>
+          <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">User Manager</router-link>
         </li>
         <li class="nav-item" >
           <router-link to="/AddBook" class="nav-link" active-class="active">Add book</router-link>
@@ -32,6 +26,27 @@
           Get Book Count
         </router-link>
         </li>
+
+        <li class="nav-item">
+          <router-link to="/WeatherCheck" class="nav-link" active-class="active">Get Weather</router-link>
+        </li>
+
+        <li class="nav-item">
+        <router-link to="/CountBookAPI" class="nav-link" active-class="active">Count Book API</router-link>
+      </li>
+
+      <li class="nav-item">
+        <router-link to="/NewsGalleryView" class="nav-link" active-class="active">NewsGalleryView</router-link>
+      </li>
+
+      <li class="nav-item">
+        <router-link to="/AddArticle" class="nav-link" active-class="active">AddArticle</router-link>
+      </li>
+
+      <li class="nav-item">
+        <router-link to="/Articlemanage" class="nav-link" active-class="active">ArticleManage</router-link>
+      </li>
+
       </ul>
       
       <div class="ml-auto" v-if="!isAuthenticated" >
@@ -40,7 +55,7 @@
       <div v-if="isAuthenticated" class="ml-auto"> 
         <button @click="logout" class="btn btn-outline-secondary">Logout</button>
       </div>
-      
+
     </header>
   </div>
 </template>
@@ -66,6 +81,25 @@ const logout = () => {
 </script>
 
 <style scoped>
+
+.header {
+  background-color: #007bff; /* 设置顶部的背景颜色为蓝色 */
+  padding: 10px; /* 添加一些内边距 */
+}
+
+.navbar {
+  color: white; /* 改变文本为白色以确保在蓝色背景下可见 */
+}
+
+.logout-botton {
+  margin-left: auto;
+}
+
+.logo-img {
+  height: 60px; 
+  width: auto;  
+}
+
 .b-example-divider {
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -109,4 +143,6 @@ const logout = () => {
   width: auto;  
 
 }
+
+
 </style>

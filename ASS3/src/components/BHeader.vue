@@ -11,14 +11,14 @@
         <li class="nav-item" v-if="!isAuthenticated">
           <router-link to="/register" class="nav-link" active-class="active" aria-current="page">Register</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="isAuthenticated">
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
         </li>
         <li class="nav-item" v-if="isAdmin">
           <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">User Manager</router-link>
         </li>
 
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAuthenticated">
         <router-link to="/NewsGalleryView" class="nav-link" active-class="active">NewsGalleryView</router-link>
       </li>
 
@@ -30,7 +30,7 @@
         <router-link to="/Articlemanage" class="nav-link" active-class="active">ArticleManage</router-link>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAuthenticated">
         <router-link to="/appointment" class="nav-link" active-class="active">Appointment</router-link>
       </li>
       
@@ -38,11 +38,11 @@
         <router-link to="/GetwebAPI" class="nav-link" active-class="active">GetwebAPI</router-link>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAuthenticated">
         <router-link to="/GenAI" class="nav-link" active-class="active">GenAI</router-link>
       </li>
 
-      <li class="nav-item" >
+      <li class="nav-item" v-if="isAuthenticated">
         <router-link to="/GeographyAPI " class="nav-link" active-class="active">MAP</router-link>
       </li>
 
@@ -53,7 +53,10 @@
       </div>
 
       <div class="ml-auto" v-if="!isAuthenticated" >
+          router.go(0) 
           <router-link to="/login" class="btn btn-outline-secondary" >Login</router-link>
+          router.go(0) 
+
         </div>
 
 

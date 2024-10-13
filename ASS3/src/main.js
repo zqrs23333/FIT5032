@@ -1,6 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';

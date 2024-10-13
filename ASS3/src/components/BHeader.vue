@@ -53,10 +53,7 @@
       </div>
 
       <div class="ml-auto" v-if="!isAuthenticated" >
-          router.go(0) 
           <router-link to="/login" class="btn btn-outline-secondary" >Login</router-link>
-          router.go(0) 
-
         </div>
 
 

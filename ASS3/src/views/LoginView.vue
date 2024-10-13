@@ -2,10 +2,10 @@
   <div class="login-background">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
       <div class="card login-card shadow-lg p-5">
-        <h2 class="text-center mb-4"><span class="key-icon">🔑</span> 登录</h2>
+        <h2 class="text-center mb-4"><span class="key-icon">🔑</span> Login</h2>
         <div class="login-tabs d-flex justify-content-around mb-5">
-          <button :class="{ 'btn-tab-active': loginMode === 'account' }" class="btn btn-tab" @click="switchMode('account')">账号登录</button>
-          <button :class="{ 'btn-tab-active': loginMode === 'email' }" class="btn btn-tab" @click="switchMode('email')">邮箱登录</button>
+          <button :class="{ 'btn-tab-active': loginMode === 'account' }" class="btn btn-tab" @click="switchMode('account')">Account sign</button>
+          <button :class="{ 'btn-tab-active': loginMode === 'email' }" class="btn btn-tab" @click="switchMode('email')">Email sign</button>
         </div>
 
         
@@ -18,7 +18,7 @@
             <label for="password" class="form-label">PASSWORD</label>
             <input type="password" class="form-control form-control-lg" v-model="password" required />
           </div>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">BY ACCOUNT</button>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">SING IN</button>
           <div v-if="loginError" class="text-danger mt-3">{{ loginError }}</div>
         </form>
 
@@ -32,7 +32,7 @@
             <label for="password" class="form-label">PASSWORD</label>
             <input type="password" class="form-control form-control-lg" v-model="password" required />
           </div>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">BY EMAIL</button>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">SIGN IN</button>
           <div v-if="loginError" class="text-danger mt-3">{{ loginError }}</div>
         </form>
       </div>
@@ -134,8 +134,8 @@ const emailLogin = async () => {
       });
     }
   } catch (error) {
-    console.error("邮箱登录过程中出现错误:", error);
-    loginError.value = '邮箱登录失败。请检查您的邮箱和密码。';
+    console.error("error", error);
+    loginError.value = 'error';
   }
 };
 </script>

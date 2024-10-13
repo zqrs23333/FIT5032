@@ -5,7 +5,7 @@
         <div class="card p-4 shadow">
           <h1 class="text-center mb-4">🗄️ Registration Form</h1>
           <form @submit.prevent="submitForm">
-            <!-- 用户名 -->
+
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input
@@ -26,7 +26,7 @@
               <button type="button" class="btn btn-info mt-2" @click="sendVerificationCode">send verification code</button>
             </div>
 
-            <!-- 验证码输入 -->
+   
             <div class="mb-3">
               <label for="verificationCode" class="form-label">verification code</label>
               <input

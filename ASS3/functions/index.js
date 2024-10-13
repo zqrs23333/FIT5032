@@ -8,11 +8,7 @@ const fetch = require("node-fetch");
 const nodemailer = require("nodemailer");
 
 const app = express();
-
-
-
 app.use(express.urlencoded({extended: true}));
-
 admin.initializeApp();
 
 exports.sendVerificationCode = onRequest((req, res) => {
@@ -146,9 +142,20 @@ exports.sendCustomEmail = functions.https.onRequest((req, res) => {
 });
 
 exports.generateText = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "GET, POST");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
   if (req.method !== "POST") {
     return res.status(400).send("Please send a POST request");
   }
+
+  if (req.method === "OPTIONS") {
+    // 处理预检请求
+    res.status(204).send("");
+    return;
+  }
+
+  res.status(200).send({generated_text: "Response from AI"});
 
   try {
     const userPrompt = req.body.prompt;

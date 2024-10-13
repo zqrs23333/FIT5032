@@ -15,6 +15,7 @@ import GeographyAPI from '../views/GeographyAPI.vue'
 import AppointmentListComponent from '@/views/AppointmentList.vue';
 import AppointmentComponent from '@/views/Appointment.vue';
 import GetwebAPI from '../views/GetwebAPI.vue'
+import GenAI from '../views/GenAI.vue'
 
 const routes = [
   {
@@ -97,6 +98,11 @@ const routes = [
     path: '/GetwebAPI',
     name: 'GetwebAPI',
     component: GetwebAPI, 
+  },
+  {
+    path: '/GenAI',
+    name: 'GenAI',
+    component: GenAI, 
   }
 ]
 

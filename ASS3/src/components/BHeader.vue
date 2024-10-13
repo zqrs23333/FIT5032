@@ -38,6 +38,10 @@
         <router-link to="/GetwebAPI" class="nav-link" active-class="active">GetwebAPI</router-link>
       </li>
 
+      <li class="nav-item" v-if="isAdmin">
+        <router-link to="/GenAI" class="nav-link" active-class="active">GenAI</router-link>
+      </li>
+
       </ul>
       
       <div v-if="isAuthenticated" class="ml-auto"> 

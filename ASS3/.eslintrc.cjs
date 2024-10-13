@@ -7,7 +7,8 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
-    '@vue/eslint-config-prettier' 
+    '@vue/eslint-config-prettier' ,
+    'google'
   ],
   env: {
     node: true,

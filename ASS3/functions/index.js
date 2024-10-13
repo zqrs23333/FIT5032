@@ -3,10 +3,14 @@ const admin = require("firebase-admin");
 const cors = require("cors")({origin: true});
 const functions = require("firebase-functions");
 const express = require("express");
+const fetch = require("node-fetch");
 
 const nodemailer = require("nodemailer");
 
 const app = express();
+
+
+
 app.use(express.urlencoded({extended: true}));
 
 admin.initializeApp();
@@ -52,12 +56,12 @@ exports.sendVerificationCode = onRequest((req, res) => {
           return transporter.sendMail(mailOptions);
         })
         .then(() => {
-          res.set("Access-Control-Allow-Origin", "*"); // 允许前端请求
+          res.set("Access-Control-Allow-Origin", "*");
           res.status(200).send({success: true});
         })
         .catch((error) => {
           console.error("Error sending email:", error);
-          res.set("Access-Control-Allow-Origin", "*"); // 允许前端请求
+          res.set("Access-Control-Allow-Origin", "*");
           res.status(500).send("Failed to send verification email");
         });
   });
@@ -65,8 +69,7 @@ exports.sendVerificationCode = onRequest((req, res) => {
 
 exports.sendCustomEmail = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
-    if (req.method === "OPTIONS") {
-      // 对于预检请求，返回状态码 204
+    if (req.method==="OPTIONS") {
       res.set("Access-Control-Allow-Origin", "*");
       res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
       res.set("Access-Control-Allow-Headers", "Content-Type");
@@ -100,9 +103,9 @@ exports.sendCustomEmail = functions.https.onRequest((req, res) => {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const subject = req.body.subject || "Your Verification Code";
     const text = req.body.text || "Your default message text";
-    // const attachmentPath = req.body.attachmentPath || null;
+    const attachmentPath = req.body.attachmentPath || null;
 
-    // 存储验证码到 Firestore
+
     const db = admin.firestore();
     db.collection("verificationCodes").doc(email).set({code})
         .then(() => {
@@ -111,13 +114,13 @@ exports.sendCustomEmail = functions.https.onRequest((req, res) => {
             to: email,
             subject,
             text,
-            // attachments: attachmentPath?
-            //   [{filename: attachmentPath.split("/").pop(),
-            //     path: attachmentPath}]:
-            //   [],
+            attachments: attachmentPath?
+              [{filename: attachmentPath.split("/").pop(),
+                path: attachmentPath}]:
+              [],
           };
 
-          // 使用 nodemailer 发送邮件
+
           const transporter = nodemailer.createTransport({
             host: "smtp.qq.com",
             port: 465,
@@ -131,13 +134,40 @@ exports.sendCustomEmail = functions.https.onRequest((req, res) => {
           return transporter.sendMail(mailOptions);
         })
         .then(() => {
-          res.set("Access-Control-Allow-Origin", "*"); // 允许前端请求
+          res.set("Access-Control-Allow-Origin", "*");
           res.status(200).send({success: true});
         })
         .catch((error) => {
           console.error("Error sending email:", error);
-          res.set("Access-Control-Allow-Origin", "*"); // 允许前端请求
+          res.set("Access-Control-Allow-Origin", "*");
           res.status(500).send("Failed to send verification email");
         });
   });
+});
+
+exports.generateText = functions.https.onRequest(async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(400).send("Please send a POST request");
+  }
+
+  try {
+    const userPrompt = req.body.prompt;
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAN_bwCFmLZIsrvTmFiEpfh_JYlvFNiVEY", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "AIzaSyAN_bwCFmLZIsrvTmFiEpfh_JYlvFNiVEY",
+      },
+      body: JSON.stringify({prompt: userPrompt}),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok: " + response.statusText);
+    }
+
+    const data = await response.json();
+    res.status(200).send({generated_text: data.generated_text});
+  } catch (error) {
+    res.status(500).send("Error: " + error.message);
+  }
 });

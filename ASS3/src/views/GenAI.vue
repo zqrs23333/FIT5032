@@ -20,11 +20,11 @@
     response.value = 'Loading...';
   
     try {
-      const res = await fetch('AIzaSyDmLRv1aVtDCXQ5UC3gwJv6mdU1jsanosY', {
+      const res = await fetch('https://generatetext-3wyv3d3kia-uc.a.run.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer YOUR_GEMINI_API_KEY',
+          Authorization: 'Bearer YOUR_BACKEND_API_KEY',
         },
         body: JSON.stringify({ prompt: userPrompt.value }),
       });

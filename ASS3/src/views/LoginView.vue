@@ -11,28 +11,28 @@
         
         <form v-if="loginMode === 'account'" @submit.prevent="accountLogin">
           <div class="mb-4">
-            <label for="username" class="form-label">用户名</label>
+            <label for="username" class="form-label">USER NAME</label>
             <input type="text" class="form-control form-control-lg" v-model="username" required />
           </div>
           <div class="mb-4">
-            <label for="password" class="form-label">密码</label>
+            <label for="password" class="form-label">PASSWORD</label>
             <input type="password" class="form-control form-control-lg" v-model="password" required />
           </div>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">账号登录</button>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">BY ACCOUNT</button>
           <div v-if="loginError" class="text-danger mt-3">{{ loginError }}</div>
         </form>
 
         
         <form v-else @submit.prevent="emailLogin">
           <div class="mb-4">
-            <label for="email" class="form-label">邮箱</label>
+            <label for="email" class="form-label">EMAIL</label>
             <input type="email" class="form-control form-control-lg" v-model="email" required />
           </div>
           <div class="mb-4">
-            <label for="password" class="form-label">密码</label>
+            <label for="password" class="form-label">PASSWORD</label>
             <input type="password" class="form-control form-control-lg" v-model="password" required />
           </div>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">邮箱登录</button>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">BY EMAIL</button>
           <div v-if="loginError" class="text-danger mt-3">{{ loginError }}</div>
         </form>
       </div>
@@ -87,13 +87,13 @@ const accountLogin = async () => {
     const userData = await fetchUserInfo(username.value);
     const secretKey = 'secret';
 
-    // 解密存储的密码
+  
     const decryptedPassword = CryptoJS.AES.decrypt(userData.password, secretKey).toString(CryptoJS.enc.Utf8);
     if (decryptedPassword === password.value) {
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('currentUser', username.value);
       
-      // 根据用户类型进行不同的操作
+
       if (userData.userType === 'admin') {
         localStorage.setItem('isAdmin', 'true');
         router.push('/admin').then(() => {
@@ -105,23 +105,23 @@ const accountLogin = async () => {
         });
       }
     } else {
-      loginError.value = '用户名或密码错误';
+      loginError.value = 'user name or password error';
     }
   } catch (error) {
-    console.error("登录过程中出现错误:", error);
-    loginError.value = '登录失败。请检查您的凭据，然后重试。';
+    console.error("sign in error", error);
+    loginError.value = 'sign in error';
   }
 };
 
-// 邮箱登录方法保持不变
+
 const emailLogin = async () => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email.value, password.value);
     console.log("Firebase login successful:", user);
-    // 从 Firestore 获取用户信息
+
     const userData = await fetchUserInfo(user.email);
 
-    // 根据用户类型进行不同的操作
+
     if (userData.userType === 'admin') {
       localStorage.setItem('isAdmin', 'true');
       router.push('/admin').then(() => {

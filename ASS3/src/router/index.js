@@ -12,6 +12,9 @@ import NewsArticlePage from '../views/NewsArticlePage.vue';
 import AddArticle from '../views/AddArticle.vue'
 import Articlemanage from '../views/Articlemanage.vue'
 import GeographyAPI from '../views/GeographyAPI.vue'
+import AppointmentListComponent from '@/views/AppointmentList.vue';
+import AppointmentComponent from '@/views/Appointment.vue';
+import GetwebAPI from '../views/GetwebAPI.vue'
 
 const routes = [
   {
@@ -79,6 +82,21 @@ const routes = [
     path: '/GeographyAPI',
     name: 'GeographyAPI',
     component: GeographyAPI,
+  },
+  {
+    path: '/appointment',
+    name: 'AppointmentList',
+    component: AppointmentListComponent, 
+  },
+  {
+    path: '/appointment/detail/:id',
+    name: 'AppointmentDetail',
+    component: AppointmentComponent, 
+  },
+  {
+    path: '/GetwebAPI',
+    name: 'GetwebAPI',
+    component: GetwebAPI, 
   }
 ]
 

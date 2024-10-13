@@ -23,25 +23,25 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="email" v-model="formData.email" />
-              <button type="button" class="btn btn-info mt-2" @click="sendVerificationCode">发送验证码</button>
+              <button type="button" class="btn btn-info mt-2" @click="sendVerificationCode">send verification code</button>
             </div>
 
             <!-- 验证码输入 -->
             <div class="mb-3">
-              <label for="verificationCode" class="form-label">验证码</label>
+              <label for="verificationCode" class="form-label">verification code</label>
               <input
                 type="text"
                 class="form-control"
                 id="verificationCode"
                 v-model="verificationCode"
-                placeholder="请输入验证码"
+                placeholder="please enter the verification code"
                 @blur="validateVerificationCode" 
                 maxlength="6"
               />
               <div v-if="errors.verificationCode" class="text-danger">{{ errors.verificationCode }}</div>
             </div>
 
-            <!-- 密码和确认密码 -->
+            
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input
@@ -85,13 +85,13 @@
               <div v-if="errors.age" class="text-danger">{{ errors.age }}</div>
             </div>
 
-            <!-- 澳大利亚居民选择 -->
+          
             <div class="form-check mb-3">
               <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian" />
               <label class="form-check-label" for="isAustralian">Australian Resident?</label>
             </div>
 
-            <!-- 加入原因 -->
+           
             <div class="mb-3">
               <label for="reason" class="form-label">Reason for joining</label>
               <textarea
@@ -145,9 +145,9 @@ const verificationCode = ref('');
 const verifyCode = async () => {
   const codeDoc = await db.collection('verificationCodes').doc(formData.value.email).get();
   if (codeDoc.exists && codeDoc.data().code === userEnteredCode) {
-    alert('验证码正确');
+    alert('correct');
   } else {
-    alert('验证码错误');
+    alert('false');
   }
 };
 
@@ -164,11 +164,11 @@ const sendVerificationCode = async () => {
     if (response.ok) {
       alert("verificationcode is sent to your email");
     } else {
-      alert("发送验证码失败，请稍后再试");
+      alert("error");
     }
   } catch (error) {
-    console.error('发送验证码失败:', error);
-    alert('发送验证码失败，请稍后再试');
+    console.error('send code false:', error);
+    alert('error');
   }
 };
 
@@ -186,15 +186,15 @@ const validateVerificationCode = async () => {
   try {
     const codeDocRef = doc(db, 'verificationCodes', formData.value.email);
     const codeDoc = await getDoc(codeDocRef);
-    // if (codeDoc.exists && codeDoc.data().code === verificationCode.value) {
-    //   errors.value.verificationCode = null; // 验证通过
-    // } else {
-    //   errors.value.verificationCode = '验证码错误'; // 验证失败，显示错误信息
-    // }
+    if (codeDoc.exists && codeDoc.data().code === verificationCode.value) {
+      errors.value.verificationCode = null; 
+    } else {
+      errors.value.verificationCode = 'error';
+    }
     errors.value.verificationCode = null
   } catch (error) {
-    console.error('验证验证码时发生错误:', error);
-    errors.value.verificationCode = '验证验证码时发生错误，请稍后重试'; // 处理错误的情况
+    console.error('error', error);
+    errors.value.verificationCode = 'error';
   }
 };
 
@@ -326,7 +326,7 @@ const clearForm = () => {
 <style scoped>
 .container {
   max-width: 700px;
-  margin: 20px auto; /* 调整外边距，将顶部和底部外边距设置得更小一些 */
+  margin: 20px auto; 
 }
 .card {
   border-radius: 15px;

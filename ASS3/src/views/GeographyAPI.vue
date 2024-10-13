@@ -53,14 +53,14 @@
           zoom: 12,
         });
   
-        // 初始化 Directions 控件
+
         this.directions = new MapboxDirections({
           accessToken: mapboxgl.accessToken,
           unit: 'metric',
           profile: 'mapbox/driving',
         });
   
-        // 将 Directions 控件添加到地图
+
         this.map.addControl(this.directions, 'top-left');
       },
       locateUser() {

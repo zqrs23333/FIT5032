@@ -32,6 +32,11 @@
         <button type="button" @click="hideModal">Cancel</button>
       </form>
     </div>
+
+    <div class="export-buttons">
+      <button @click="exportToCSV">Export to CSV</button>
+      <button @click="exportToPDF">Export to PDF</button>
+    </div>
   </div>
 </template>
 
@@ -41,6 +46,7 @@ import Column from 'primevue/column'
 import { ref, onMounted } from 'vue'
 import CryptoJS from 'crypto-js';
 import { getFirestore, collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import jsPDF from 'jspdf';
 
 const secretKey = 'secret';
 const db = getFirestore(); 
@@ -55,7 +61,7 @@ const fetchUsersFromFirestore = async () => {
       const decryptedPassword = CryptoJS.AES.decrypt(userData.password, secretKey).toString(CryptoJS.enc.Utf8);
       return {
         ...userData,
-        id: doc.id, // 存储文档ID，以便于删除
+        id: doc.id, 
         password: decryptedPassword,
       };
     });
@@ -67,7 +73,7 @@ const fetchUsersFromFirestore = async () => {
 const deleteUser = async (userId) => {
   try {
     await deleteDoc(doc(db, 'users', userId));
-    users.value = users.value.filter(user => user.id !== userId); // 更新本地用户列表
+    users.value = users.value.filter(user => user.id !== userId); 
     alert('User deleted successfully');
   } catch (error) {
     console.error('Error deleting user:', error);
@@ -121,6 +127,48 @@ const sendEmailWithAttachments = async () => {
   } catch (error) {
     console.error('Error sending email:', error);
   }
+};
+
+const exportToCSV = () => {
+  const csvRows = [];
+  const headers = Object.keys(users.value[0]).filter(key => key !== 'id');
+  csvRows.push(headers.join(',')); 
+
+  users.value.forEach(user => {
+    const values = headers.map(header => `"${user[header]}"`);
+    csvRows.push(values.join(','));
+  });
+
+  const csvString = csvRows.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.setAttribute('hidden', '');
+  a.setAttribute('href', url);
+  a.setAttribute('download', 'users.csv');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+const exportToPDF = () => {
+  const doc = new jsPDF();
+  let y = 10;
+
+  users.value.forEach((user, index) => {
+    doc.text(10, y, `User ${index + 1}:`);
+    y += 10;
+    Object.keys(user).forEach(key => {
+      if (key !== 'id') {
+        doc.text(10, y, `${key}: ${user[key]}`);
+        y += 10;
+      }
+    });
+    y += 10; // 添加一些间距
+  });
+
+  doc.save('users.pdf');
 };
 
 onMounted(() => {
@@ -204,5 +252,22 @@ onMounted(() => {
   background: #ccc;
   color: black;
   border: none;
+}
+
+.export-buttons {
+  margin-top: 20px;
+}
+
+.export-buttons button {
+  margin-right: 10px;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.export-buttons button:hover {
+  background: #218838;
 }
 </style>

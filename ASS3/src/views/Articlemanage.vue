@@ -62,12 +62,18 @@
         <button type="button" @click="cancelEditing">Cancel</button>
       </form>
     </div>
+
+    <div class="export-buttons">
+      <button @click="exportToCSV">Export to CSV</button>
+      <button @click="exportToPDF">Export to PDF</button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import jsPDF from 'jspdf';
 
 const db = getFirestore();
 const articles = ref([]);
@@ -166,6 +172,48 @@ const cancelEditing = () => {
   isEditing.value = false;
   editableArticle.value = null;
 };
+
+const exportToCSV = () => {
+  const csvRows = [];
+  const headers = Object.keys(articles.value[0]).filter(key => key !== 'id');
+  csvRows.push(headers.join(',')); // 添加表头
+
+  articles.value.forEach(article => {
+    const values = headers.map(header => `"${article[header]}"`);
+    csvRows.push(values.join(','));
+  });
+
+  const csvString = csvRows.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.setAttribute('hidden', '');
+  a.setAttribute('href', url);
+  a.setAttribute('download', 'articles.csv');
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+const exportToPDF = () => {
+  const doc = new jsPDF();
+  let y = 10;
+
+  articles.value.forEach((article, index) => {
+    doc.text(10, y, `Article ${index + 1}:`);
+    y += 10;
+    Object.keys(article).forEach(key => {
+      if (key !== 'id') {
+        doc.text(10, y, `${key}: ${article[key]}`);
+        y += 10;
+      }
+    });
+    y += 10; // 添加一些间距
+  });
+
+  doc.save('articles.pdf');
+};
 </script>
 
 <style scoped>
@@ -223,5 +271,22 @@ const cancelEditing = () => {
   height: 300px; /* 增加高度 */
   padding: 8px;
   margin-top: 5px;
+}
+
+.export-buttons {
+  margin-top: 20px;
+}
+
+.export-buttons button {
+  margin-right: 10px;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.export-buttons button:hover {
+  background: #218838;
 }
 </style>

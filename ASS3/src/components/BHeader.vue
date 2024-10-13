@@ -18,10 +18,6 @@
           <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">User Manager</router-link>
         </li>
 
-        <li class="nav-item">
-          <router-link to="/WeatherCheck" class="nav-link" active-class="active">Get Weather</router-link>
-        </li>
-
       <li class="nav-item" v-if="isAdmin">
         <router-link to="/NewsGalleryView" class="nav-link" active-class="active">NewsGalleryView</router-link>
       </li>
@@ -35,17 +31,23 @@
       </li>
 
       <li class="nav-item" v-if="isAdmin">
-        <router-link to="/GeographyAPI" class="nav-link" active-class="active">Map Introduction</router-link>
+        <router-link to="/appointment" class="nav-link" active-class="active">Appointment</router-link>
+      </li>
+      
+      <li class="nav-item" v-if="isAdmin">
+        <router-link to="/GetwebAPI" class="nav-link" active-class="active">GetwebAPI</router-link>
       </li>
 
       </ul>
       
-      <div class="ml-auto" v-if="!isAuthenticated" >
-          <router-link to="/login" class="btn btn-outline-secondary" >Login</router-link>
-        </div>
       <div v-if="isAuthenticated" class="ml-auto"> 
         <button @click="logout" class="btn btn-outline-secondary">Logout</button>
       </div>
+
+      <div class="ml-auto" v-if="!isAuthenticated" >
+          <router-link to="/login" class="btn btn-outline-secondary" >Login</router-link>
+        </div>
+
 
     </header>
   </div>
@@ -74,12 +76,12 @@ const logout = () => {
 <style scoped>
 
 .header {
-  background-color: #007bff; /* 设置顶部的背景颜色为蓝色 */
-  padding: 10px; /* 添加一些内边距 */
+  background-color: #007bff; 
+  padding: 10px;
 }
 
 .navbar {
-  color: white; /* 改变文本为白色以确保在蓝色背景下可见 */
+  color: white;
 }
 
 .logout-botton {

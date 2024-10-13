@@ -17,6 +17,7 @@
       <Column header="Actions">
         <template #body="{ data }">
           <button @click="showModal(data)" class="email-button">Send Email</button>
+          <button @click="deleteUser(data.id)" class="delete-button">Delete</button>
         </template>
       </Column>
     </DataTable>
@@ -39,8 +40,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import { ref, onMounted } from 'vue'
 import CryptoJS from 'crypto-js';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import axios from 'axios';
+import { getFirestore, collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
 
 const secretKey = 'secret';
 const db = getFirestore(); 
@@ -55,6 +55,7 @@ const fetchUsersFromFirestore = async () => {
       const decryptedPassword = CryptoJS.AES.decrypt(userData.password, secretKey).toString(CryptoJS.enc.Utf8);
       return {
         ...userData,
+        id: doc.id, // 存储文档ID，以便于删除
         password: decryptedPassword,
       };
     });
@@ -63,15 +64,27 @@ const fetchUsersFromFirestore = async () => {
   }
 };
 
+const deleteUser = async (userId) => {
+  try {
+    await deleteDoc(doc(db, 'users', userId));
+    users.value = users.value.filter(user => user.id !== userId); // 更新本地用户列表
+    alert('User deleted successfully');
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    alert('Failed to delete user');
+  }
+};
+
 const emailDialog = ref(false);
 const emailData = ref({
   to: '',
+  subject: '',
   body: '',
   attachments: []
 });
 
 const showModal = (userData) => {
-  emailData.value.to = userData.email; // Pre-fill the recipient email
+  emailData.value.to = userData.email.value; // 预填充接收者的邮箱
   emailDialog.value = true;
 };
 
@@ -80,24 +93,34 @@ const hideModal = () => {
 };
 
 const onFileChange = (event) => {
-  emailData.value.attachments = Array.from(event.target.files);
+  emailData.value.attachments = event.target.files;
 };
 
 const sendEmailWithAttachments = async () => {
   const formData = new FormData();
   formData.append('to', emailData.value.to);
+  formData.append('subject', emailData.value.subject);
   formData.append('body', emailData.value.body);
-  emailData.value.attachments.forEach(file => {
-    formData.append('attachments', file);
-  });
+
+  for (let i = 0; i < emailData.value.attachments.length; i++) {
+    const file = emailData.value.attachments[i];
+    formData.append('attachments', file, file.name);
+  }
 
   try {
-    await axios.post('https://your-api-url/send-email-with-attachments', formData);
-    console.log('Email sent successfully');
+    const response = await fetch('https://sendverificationcode-3wyv3d3kia-uc.a.run.app', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log('Email sent successfully');
+    } else {
+      console.error('Failed to send email:', response.statusText);
+    }
   } catch (error) {
-    console.error('Failed to send email:', error);
+    console.error('Error sending email:', error);
   }
-  hideModal();
 };
 
 onMounted(() => {
@@ -127,6 +150,19 @@ onMounted(() => {
 
 .email-button:hover {
   background: #0056b3;
+}
+
+.delete-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.delete-button:hover {
+  background: #c82333;
 }
 
 .email-dialog {

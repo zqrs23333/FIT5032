@@ -17,34 +17,25 @@
         <li class="nav-item" v-if="isAdmin">
           <router-link to="/manager" class="nav-link" active-class="active" aria-current="page">User Manager</router-link>
         </li>
-        <li class="nav-item" >
-          <router-link to="/AddBook" class="nav-link" active-class="active">Add book</router-link>
-        </li>
-
-        <li class="nav-item">
-        <router-link to="/GetBookCount" class="nav-link" active-class="active">
-          Get Book Count
-        </router-link>
-        </li>
 
         <li class="nav-item">
           <router-link to="/WeatherCheck" class="nav-link" active-class="active">Get Weather</router-link>
         </li>
 
-        <li class="nav-item">
-        <router-link to="/CountBookAPI" class="nav-link" active-class="active">Count Book API</router-link>
-      </li>
-
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAdmin">
         <router-link to="/NewsGalleryView" class="nav-link" active-class="active">NewsGalleryView</router-link>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAdmin">
         <router-link to="/AddArticle" class="nav-link" active-class="active">AddArticle</router-link>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" v-if="isAdmin">
         <router-link to="/Articlemanage" class="nav-link" active-class="active">ArticleManage</router-link>
+      </li>
+
+      <li class="nav-item" v-if="isAdmin">
+        <router-link to="/GeographyAPI" class="nav-link" active-class="active">Map Introduction</router-link>
       </li>
 
       </ul>

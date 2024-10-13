@@ -6,14 +6,12 @@ import AccessDenied from '../views/AccessDenied.vue'
 import HomeView from '../views/HomeView.vue'
 import ManageView from '../views/ManageView.vue'
 import SuccessRegisterView from '../views/SuccessRegisterView.vue'
-import AddBookView from '../views/AddBookView.vue'
-import GetBookCountView from '../views/GetBookCountView.vue'
 import WeatherView from '../views/WeatherView.vue';
-import CountBookAPI from '../views/CountBookAPI.vue'
 import NewsGalleryView from '../views/NewsGalleryPage.vue';
 import NewsArticlePage from '../views/NewsArticlePage.vue';
 import AddArticle from '../views/AddArticle.vue'
 import Articlemanage from '../views/Articlemanage.vue'
+import GeographyAPI from '../views/GeographyAPI.vue'
 
 const routes = [
   {
@@ -50,28 +48,12 @@ const routes = [
     path: '/SuccessRegister',
     name: 'SuccessRegister',
     component: SuccessRegisterView
-  },
-  {
-    path: '/AddBook',
-    name: 'AddBook',
-    component: AddBookView
-  }
-  ,
-  {
-    path: '/GetBookCount',
-    name: 'GetBookCount',
-    component: GetBookCountView
   }
   ,
   {
     path: '/WeatherCheck',
     name: 'WeatherCheck',
     component: WeatherView
-  },
-  {
-    path: '/CountBookAPI',
-    name: 'CountBookAPI',
-    component: CountBookAPI
   },
   {
     path: '/NewsGalleryView',
@@ -92,6 +74,11 @@ const routes = [
     path: '/Articlemanage',
     name: 'Articlemanage',
     component: Articlemanage,
+  },
+  {
+    path: '/GeographyAPI',
+    name: 'GeographyAPI',
+    component: GeographyAPI,
   }
 ]
 

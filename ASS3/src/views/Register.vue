@@ -162,7 +162,7 @@ const sendVerificationCode = async () => {
     });
 
     if (response.ok) {
-      alert("验证码已发送至您的邮箱");
+      alert("verificationcode is sent to your email");
     } else {
       alert("发送验证码失败，请稍后再试");
     }
@@ -276,7 +276,7 @@ const submitForm = async () => {
 
   if (!Object.values(errors.value).some(Boolean)) {
     try {
-      await createUserWithEmailAndPassword(auth, email, formData.value.password);
+      await createUserWithEmailAndPassword(auth, email.value, formData.value.password);
       console.log("Firebase Register Successful!");
 
       const secretKey = 'secret';

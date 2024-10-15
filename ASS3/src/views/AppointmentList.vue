@@ -52,9 +52,9 @@
     }
   };
   
-  // 创建新的预约
+
   const createHourlyAppointment = async (date) => {
-    // 检查选择的时间是否与现有预约冲突
+
     const isConflict = events.value.some(event => date >= event.start && date < event.end);
     if (isConflict) {
       alert('The selected time slot is already booked. Please choose another time.');

@@ -107,9 +107,9 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
-})
+  history: createWebHistory(process.env.BASE_URL),
+  routes: routes
+});
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'

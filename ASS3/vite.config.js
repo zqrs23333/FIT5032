@@ -11,3 +11,9 @@ export default defineConfig({
     }
   }
 })
+
+module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/FIT5032/ass3/' // 仓库名和子文件夹名
+    : '/'
+}

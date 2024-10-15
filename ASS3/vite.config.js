@@ -9,11 +9,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'primevue': fileURLToPath(new URL('./node_modules/primevue', import.meta.url))
     }
-  }
-})
-
-module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/FIT5032/ass3/' // 仓库名和子文件夹名
-    : '/'
-}
+  },
+  base: process.env.NODE_ENV === 'production'
+    ? '/FIT5032/ass3/'  
+    : '/'               
+});

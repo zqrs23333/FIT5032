@@ -17,6 +17,7 @@ export default defineConfig({
     build: {
       rollupOptions: {
         external: ['crypto-js'] // 将 crypto-js 模块设置为外部依赖
-      }
+      },
+      outDir: 'dist'
     }
 });

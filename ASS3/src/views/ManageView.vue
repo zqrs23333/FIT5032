@@ -90,7 +90,7 @@ const emailData = ref({
 });
 
 const showModal = (userData) => {
-  emailData.value.to = userData.email.value; // 预填充接收者的邮箱
+  emailData.value.to = userData.email.value; 
   emailDialog.value = true;
 };
 

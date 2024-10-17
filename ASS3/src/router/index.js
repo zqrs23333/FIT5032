@@ -54,11 +54,11 @@ const routes = [
     component: SuccessRegisterView
   }
   ,
-  {
-    path: '/WeatherCheck',
-    name: 'WeatherCheck',
-    component: WeatherView
-  },
+  // {
+  //   path: '/WeatherCheck',
+  //   name: 'WeatherCheck',
+  //   component: WeatherView
+  // },
   {
     path: '/NewsGalleryView',
     name: 'NewsGalleryView',

@@ -46,9 +46,9 @@
         <router-link to="/GeographyAPI " class="nav-link" active-class="active">MAP</router-link>
       </li>
 
-      <li class="nav-item" v-if="isAuthenticated">
+      <!-- <li class="nav-item" v-if="isAuthenticated">
         <router-link to="/WeatherCheck " class="nav-link" active-class="active">Weather</router-link>
-      </li>
+      </li> -->
       </ul>
       
       <div v-if="isAuthenticated" class="ml-auto"> 

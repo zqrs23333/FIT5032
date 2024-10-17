@@ -66,7 +66,7 @@
               console.log("Latitude:", latitude, "Longitude:", longitude); // 调试日志
               
               
-              const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&units=metric`;
+              const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&units=metric`;
               await this.fetchWeatherData(url);
             },
             (error) => {
@@ -83,7 +83,7 @@
       
       async searchByCity() {
         if (this.city !== "") {
-          const url = `http://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${apikey}&units=metric`;
+          const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${apikey}&units=metric`;
           await this.fetchWeatherData(url);
         } else {
           alert("Please enter a city name");
